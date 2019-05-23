@@ -102,6 +102,7 @@ function showAddCustDiv() {
 					var company = document.getElementById('cust_company').value;
 					
 					if(!checkPhone(telephone)){
+						layer.msg("联系电话格式错误");
 						return false;
 					}
 					
@@ -364,6 +365,11 @@ function modCustomer() {
 		"telephone" : $('#cus_telephone').val(),
 		"company" : $('#cus_company').val()
 	};
+	if(!checkPhone(telephone)){
+		layer.msg("联系电话格式错误");
+		return false;
+	}
+	
 	$.ajax({
 				async : false,
 				type : "PUT",

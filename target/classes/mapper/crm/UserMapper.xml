@@ -1,0 +1,108 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="pri.crm.dao.UserMapper">
+  <resultMap id="BaseResultMap" type="pri.crm.vo.UserVo">
+    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="Eno" jdbcType="VARCHAR" property="Eno" />
+    <result column="power" jdbcType="INTEGER" property="power" />
+  </resultMap>
+  <select id="query" parameterType="pri.crm.vo.UserVo" resultType="pri.crm.vo.UserVo">
+  	select * from user
+  	<where>
+  		<trim suffixOverrides="and ">
+				<if test="username != null and username!=''">
+					and username=#{username}
+				</if>
+				<if test="password != null">
+					and password=#{password}
+				</if>
+				<if test="power != null">
+					and power=#{power}
+				</if>
+				<if test="eno != null">
+					and eno=#{eno}
+				</if>
+			</trim>
+  	</where> 
+  </select>
+  
+
+  <update id="update" parameterType="pri.crm.vo.UserVo">
+  	update user
+  	set 
+  	<trim  suffixOverrides="," >
+	  	<if test="username != null">
+	        username=#{username},
+	     </if>
+	     <if test="password != null">
+	        password=#{password},
+	     </if>
+	     <if test="Eno != null">
+	        Eno=#{Eno},
+	     </if>
+	     <if test="power != null">
+	        power=#{power},
+	      </if>
+      </trim>
+  	where username=#{username}
+  </update>
+  <insert id="insert" parameterType="pri.crm.vo.UserVo">
+    insert into user (username, password, Eno, 
+      power)
+    values (#{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{Eno,jdbcType=VARCHAR}, 
+      #{power,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="pri.crm.vo.UserVo">
+    insert into user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="username != null">
+        username,
+      </if>
+      <if test="password != null">
+        password,
+      </if>
+      <if test="Eno != null">
+        Eno,
+      </if>
+      <if test="power != null">
+        power,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="username != null">
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="Eno != null">
+        #{Eno,jdbcType=VARCHAR},
+      </if>
+      <if test="power != null">
+        #{power,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+
+  <delete id="delete" parameterType="pri.crm.vo.UserVo" >
+    delete
+    from user
+    where
+      <if test="username != null" >
+        username=#{username,jdbcType=VARCHAR}
+        <trim suffixOverrides="and" >
+          <if test="password != null">
+            and password and
+          </if>
+          <if test="Eno != null">
+            Eno and
+          </if>
+          <if test="power != null">
+            power and
+          </if>
+      </trim>
+      </if>
+      
+  </delete>
+</mapper>

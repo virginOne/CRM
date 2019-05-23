@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="pri.crm.dao.CustomerMapper">
+	<resultMap id="BaseResultMap" type="pri.crm.vo.CustomerVo">
+		<result column="cid" property="cid" jdbcType="INTEGER" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="sex" property="sex" jdbcType="VARCHAR" />
+		<result column="telephone" property="telephone"
+			jdbcType="VARCHAR" />
+		<result column="address" property="address" jdbcType="VARCHAR" />
+		<result column="company" property="company" jdbcType="VARCHAR" />
+	</resultMap>
+	<select id="query" parameterType="pri.crm.vo.CustomerVo"
+		resultType="pri.crm.vo.CustomerVo">
+		select * from customer
+		<where>
+			<trim suffixOverrides="and ">
+				<if test="cid != null">
+					and cid=#{cid}
+				</if>
+				<if test="name != null">
+					and name=#{name}
+				</if>
+				<if test="sex != null">
+					and sex=#{sex}
+				</if>
+				<if test="telephone != null">
+					and telephone=#{telephone}
+				</if>
+				<if test="address != null">
+					and address=#{address}
+				</if>
+				<if test="company != null">
+					and company=#{company}
+				</if>
+			</trim>
+		</where>
+	</select>
+	<insert id="insert" parameterType="pri.crm.vo.CustomerVo">
+		insert into customer (cid,
+		name, sex,
+		telephone, address, company
+		)
+		values (#{cid,jdbcType=INTEGER},
+		#{name,jdbcType=VARCHAR},
+		#{sex,jdbcType=VARCHAR},
+		#{telephone,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR},
+		#{company,jdbcType=VARCHAR}
+		)
+	</insert>
+	<insert id="insertSelective"
+		parameterType="pri.crm.vo.CustomerVo">
+		insert into customer
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="cid != null">
+				cid,
+			</if>
+			<if test="name != null">
+				name,
+			</if>
+			<if test="sex != null">
+				sex,
+			</if>
+			<if test="telephone != null">
+				telephone,
+			</if>
+			<if test="address != null">
+				address,
+			</if>
+			<if test="company != null">
+				company,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="cid != null">
+				#{cid,jdbcType=INTEGER},
+			</if>
+			<if test="name != null">
+				#{name,jdbcType=VARCHAR},
+			</if>
+			<if test="sex != null">
+				#{sex,jdbcType=VARCHAR},
+			</if>
+			<if test="telephone != null">
+				#{telephone,jdbcType=VARCHAR},
+			</if>
+			<if test="address != null">
+				#{address,jdbcType=VARCHAR},
+			</if>
+			<if test="company != null">
+				#{company,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="update" parameterType="pri.crm.vo.CustomerVo">
+		update customer
+		set
+		<trim suffixOverrides=",">
+			<if test="name != null">
+				name=#{name,jdbcType=VARCHAR},
+			</if>
+			<if test="sex != null">
+				sex=#{sex,jdbcType=VARCHAR},
+			</if>
+			<if test="telephone != null">
+				telephone=#{telephone,jdbcType=VARCHAR},
+			</if>
+			<if test="address != null">
+				address=#{address,jdbcType=VARCHAR},
+			</if>
+			<if test="company != null">
+				company=#{company,jdbcType=VARCHAR},
+			</if>
+		</trim>
+		where cid=#{cid}
+	</update>
+	<delete id="delete" parameterType="java.lang.Integer">
+		delete from customer
+		where
+		cid=#{cid}
+	</delete>
+</mapper>

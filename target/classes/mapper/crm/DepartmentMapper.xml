@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="pri.crm.dao.DepartmentMapper" >
+  <resultMap id="BaseResultMap" type="pri.crm.vo.DepartmentVo" >
+    <result column="Dno" property="dno" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="leader" property="leader" jdbcType="INTEGER" />
+    <result column="telephone" property="telephone" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <select id="query" parameterType="pri.crm.vo.DepartmentVo" resultType="pri.crm.vo.DepartmentVo">
+    select * from department
+    <where>
+	    <trim suffixOverrides="and " >
+	      <if test="dno != null" >
+	        Dno=#{dno} and
+	      </if>
+	      <if test="name != null" >
+	        name=#{name} and
+	      </if>
+	      <if test="leader != null" >
+	        leader=#{leader} and
+	      </if>
+	      <if test="telephone != null" >
+	        telephone=#{telephone} and
+	      </if>
+	    </trim>
+    </where> 
+  </select>
+  <insert id="insert" parameterType="pri.crm.vo.DepartmentVo" >
+    insert into department (Dno, name, leader, 
+      telephone)
+    values (#{dno,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{leader,jdbcType=INTEGER}, 
+      #{telephone,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="pri.crm.vo.DepartmentVo" >
+    insert into department
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="dno != null" >
+        Dno,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="leader != null" >
+        leader,
+      </if>
+      <if test="telephone != null" >
+        telephone,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="dno != null" >
+        #{dno,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="leader != null" >
+        #{leader,jdbcType=INTEGER},
+      </if>
+      <if test="telephone != null" >
+        #{telephone,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+</mapper>

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="pri.crm.dao.RelationshipMapper">
+	<resultMap id="BaseResultMap"
+		type="pri.crm.vo.RelationshipVo">
+		<result column="rid" jdbcType="INTEGER" property="rid" />
+		<result column="cid1" jdbcType="VARCHAR" property="cid1" />
+		<result column="cid2" jdbcType="VARCHAR" property="cid2" />
+		<result column="relationship" jdbcType="VARCHAR"
+			property="relationship" />
+	</resultMap>
+	<select id="query" parameterType="java.util.Map"
+		resultType="java.util.Map">
+		select rid, cid1, cid2,
+		relationship, c.* from relationship r
+		left join customer c on (cid1=c.cid or cid2=c.cid) and c.cid!=#{cid}
+		<where>
+			<trim suffixOverrides="and ">
+				<if test="rid != null">
+					and r.rid=#{rid}
+				</if>
+				<if test="cid != null">
+					and (r.cid1=#{cid} or r.cid2=#{cid})
+				</if>
+				<if test="relationship != null">
+					and r.relationship=#{relationship}
+				</if>
+			</trim>
+		</where>
+	</select>
+	<insert id="insert" parameterType="pri.crm.vo.RelationshipVo">
+		insert into relationship (rid,
+		cid1, cid2,
+		relationship)
+		values (#{rid,jdbcType=INTEGER},
+		#{cid1,jdbcType=VARCHAR},
+		#{cid2,jdbcType=VARCHAR},
+		#{relationship,jdbcType=VARCHAR})
+	</insert>
+	<insert id="insertSelective"
+		parameterType="pri.crm.vo.RelationshipVo">
+		insert into relationship
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="rid != null">
+				rid,
+			</if>
+			<if test="cid1 != null">
+				cid1,
+			</if>
+			<if test="cid2 != null">
+				cid2,
+			</if>
+			<if test="relationship != null">
+				relationship,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="rid != null">
+				#{rid,jdbcType=INTEGER},
+			</if>
+			<if test="cid1 != null">
+				#{cid1,jdbcType=VARCHAR},
+			</if>
+			<if test="cid2 != null">
+				#{cid2,jdbcType=VARCHAR},
+			</if>
+			<if test="relationship != null">
+				#{relationship,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<delete id="delete" parameterType="java.lang.Integer">
+		delete from relationship
+		where
+		rid=#{rid}
+	</delete>
+	<update id="update" parameterType="pri.crm.vo.RelationshipVo">
+		update relationship
+		set
+		<trim suffixOverrides=",">
+			<if test="cid1 != null">
+				cid1=#{cid1},
+			</if>
+			<if test="cid2 != null">
+				cid2=#{cid2},
+			</if>
+			<if test="relationship != null">
+				relationship=#{relationship},
+			</if>
+		</trim>
+		where rid=#{rid}
+	</update>
+</mapper>

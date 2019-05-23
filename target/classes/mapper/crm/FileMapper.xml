@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="pri.crm.dao.FileMapper" >
+  <resultMap id="BaseResultMap" type="pri.crm.vo.FileVo" >
+    <result column="fid" property="fid" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="size" property="size" jdbcType="INTEGER" />
+    <result column="suffix" property="suffix" jdbcType="VARCHAR" />
+    <result column="eno" property="eno" jdbcType="INTEGER" />
+  </resultMap>
+  <select id="query" parameterType="pri.crm.vo.FileVo" resultType="pri.crm.vo.FileVo">
+	  select * from file
+	  <where>
+	   <trim suffixOverrides="and " >
+	     <if test="fid != null" >
+	       and fid=#{fid} 
+	     </if>
+	     <if test="name != null" >
+	        and name=#{name}
+	     </if>
+	     <if test="path != null" >
+	        and path=#{path}
+	     </if>
+	     <if test="size != null &amp;&amp; size!=0" >
+	        and size=#{size} 
+	     </if>
+	     <if test="suffix != null" >
+	       and suffix=#{suffix}
+	     </if>
+	     <if test="eno != null" >
+	       and eno=#{eno} 
+	     </if>
+	   </trim>
+	  </where> 
+  </select>
+  <select id="vquery" parameterType="java.util.Map" resultType="java.util.Map">
+  	select f.fid,f.name,f.size,f.suffix,date_format(f.time, '%Y-%m-%d %H:%i:%s') time,e.name creator from file f LEFT JOIN employee e on f.eno=e.eno
+  	<where>
+  		<if test="fname != null" >
+	      and f.name like concat('%',#{fname},'%') 
+	    </if>
+	    <if test="creator != null" >
+	      and e.name like concat('%',#{creator},'%') 
+	    </if>
+	    <if test="ftype !=null">
+	    	and f.suffix in
+  			<foreach collection="ftype" item="type" separator="," open="(" close=")">
+  				#{type}
+  			</foreach>
+  		</if>
+  	</where>
+  	order by f.time desc
+  </select>
+  <insert id="insert" parameterType="pri.crm.vo.FileVo" >
+    insert into file (fid, name, path, size, 
+      suffix, time, eno)
+    values (#{fid,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{path,jdbcType=VARCHAR}, #{size,jdbcType=INTEGER}, 
+      #{suffix,jdbcType=VARCHAR},#{time}, #{eno,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="pri.crm.vo.FileVo" >
+    insert into file
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="fid != null" >
+        fid,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="path != null" >
+        path,
+      </if>
+      <if test="size != null &amp;&amp; size!=0" >
+        size,
+      </if>
+      <if test="suffix != null" >
+        suffix,
+      </if>
+      <if test="time != null" >
+        time,
+      </if>
+      <if test="eno != null" >
+        eno,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="fid != null" >
+        #{fid,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="path != null" >
+        #{path,jdbcType=VARCHAR},
+      </if>
+      <if test="size != null &amp;&amp; size!=0" >
+        #{size,jdbcType=INTEGER},
+      </if>
+      <if test="suffix != null" >
+        #{suffix,jdbcType=VARCHAR},
+      </if>
+      <if test="time != null" >
+        #{time},
+      </if>
+      <if test="eno != null" >
+        #{eno,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <delete id="delete" parameterType="pri.crm.vo.FileVo" >
+    delete
+    from file
+    where fid=#{fid}
+   </delete>
+   <update id="update" parameterType="pri.crm.vo.FileVo">
+   	update file
+   	set 
+   	 <trim suffixOverrides="," >
+      <if test="name != null" >
+        name=#{name},
+      </if>
+      <if test="path != null" >
+        path=#{path},
+      </if>
+      <if test="size != null &amp;&amp; size!=0" >
+        size=#{size},
+      </if>
+      <if test="suffix != null" >
+        suffix=#{suffix},
+      </if>
+      <if test="time != null" >
+        time=#{time},
+      </if>
+      <if test="eno != null" >
+        eno=#{eno},
+      </if>
+    </trim>
+   	where fid=#{fid}
+   </update>
+</mapper>

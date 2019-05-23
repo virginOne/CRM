@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Implementation-Title: pri.crm
+Implementation-Version: 0.0.1-SNAPSHOT
+Built-By: 0
+Implementation-Vendor-Id: pri.crm
+Build-Jdk: 1.8.0_172
+Implementation-URL: https://projects.spring.io/spring-boot/#/spring-bo
+ ot-starter-parent/pri.crm
+Created-By: Maven Integration for Eclipse
+

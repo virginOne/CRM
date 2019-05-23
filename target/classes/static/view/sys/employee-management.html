@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<title>员工管理</title>
+	<meta name="renderer" content="webkit">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<link rel="stylesheet" href="../../plugins/layui/css/layui.css" media="all" />
+	<link rel="stylesheet" href="../../css/global.css" media="all">
+	<link rel="stylesheet" href="../../css/font-awesome.min.css" media="all">
+	<script type="text/javascript" src="../../plugins/layui/layui.js"></script>
+	<script src="../../js/jquery-1.8.1.min.js" type="text/javascript"></script>
+	<script src="../../js/sys/employee.js" type="text/javascript"></script>
+</head>
+
+<body style="min-width: 1024px;">
+	<div style="border: 2px solid #000; border-color: #1AA094;">
+		<div>
+			<fieldset style="border: 2px solid #1AA094;">
+				<legend align="left" style="font-weight: bold; color: #B22222;">员工查询</legend>
+				<p>
+					<ul>
+						<div style="margin-top: 1%; margin-left: 2%;">
+							<div style="font-size: 14px; display: inline-flex;">
+								<input type="text" name="searchText" id="searchText" class="layui-input" placeholder="请输入员工名">
+							</div>
+							<div style="font-size: 14px; display: inline-flex;">
+								<button type="button" class="layui-btn" onclick="getEmployeeByPage(1);" lay-filter="btnSearch"
+									style="float: left;">
+									<i class="layui-icon">&#xe615;</i> 搜索
+								</button>
+							</div>
+						</div>
+						<input id="pageNo" type="hidden">
+						<input id="totalPage" type="hidden">
+					</ul>
+			</fieldset>
+		</div>
+		<!-- 员工列表-->
+		<fieldset style="border: 2px solid #1AA094;	" item-height="800px">
+			<legend align="left" style="font-weight: bold; color: #B22222;">员工列表</legend>
+			<p>
+				<ul>
+					<div class="layui-tab admin-nav-card layui-tab-brief" style="height: 40px;">
+						<ul class="layui-tab-title">
+							<li class="layui-this" style="width: 99%;"><i class="layui-icon"
+									style="float: right; margin-right: 10px;" onclick="deleteEmployee();">&#xe640;删除</i> <i
+									class="layui-icon" style="float: right; margin-right: 10px;"
+									onclick="editEmployeePage();">编辑</i>
+								<i class="layui-icon" style="float: right; margin-right: 10px;"
+									onclick="addEmployeePage();">新增</i></li>
+						</ul>
+					</div>
+					<table class="site-table table-hover">
+						<thead>
+							<tr style="font-size: 14px; height: 35px;">
+								<th style="font-size: 14px;"></th>
+								<th style="font-size: 14px;">工号</th>
+								<th style="font-size: 14px;">员工名</th>
+								<th style="font-size: 14px;">员工性别</th>
+								<th style="font-size: 14px;">部门</th>
+								<th style="font-size: 14px;">联系电话</th>
+							</tr>
+						</thead>
+						<tbody id="tableList">
+						</tbody>
+						<tfoot class="layui-laydate-footer">
+							<tr>
+								<td colspan='8'>
+									<div class="layui-box layui-laypage layui-laypage-default" id="layui-laypage-0"
+										style="text-align: center; width: 90%;">
+										<a href="#" id="first_page" class="laypage_first">第一页</a>
+										<a href="#" id="pre_page" class="layui-laypage-prev">上一页</a>
+										<a href="#" id="next_page" class="layui-laypage-next">下一页</a>
+										<a href="#" id="last_page" class="layui-laypage-last">最后页</a>
+									</div>
+								</td>
+							</tr>
+						</tfoot>
+					</table>
+				</ul>
+			</p>
+		</fieldset>
+	</div>
+	<!--添加员工-->
+	<div id="addEmployee" style="display: none;">
+		<div class="modal-body" style="padding: 5px;">
+			<table class="site-table table-hover">
+				<thead>
+					<tr>
+						<td style="font-size: 14px; text-align: right;">员工名：</td>
+						<td style="font-size: 14px;"><input type="text" style="width: 98%; height: 30px;" id="ename"
+								autocomplete="off" onkeyup="this.value=this.value.replace(/[^\u4e00-\u9fa5a-zA-Z\s]+/,'');">
+						</td>
+					</tr>
+					<tr>
+						<td style="font-size: 14px; text-align: right;">性别</td>
+						<td style="font-size: 14px;">
+							<select name="sex" id="sex" lay-verify="sex|required" style="width: 98%; height: 30px;">
+								<option value="男">男</option>
+								<option value="女">女</option>
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<td style="font-size: 14px; text-align: right;">部门</td>
+						<td style="font-size: 14px;">
+							<select name="dno" id="dno" lay-verify="required" style="width: 98%; height: 30px;">
+								<option value="男">男</option>
+								<option value="女">女</option>
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<td style="font-size: 14px; text-align: right;">联系电话</td>
+						<td style="font-size: 14px;">
+							<input type="text" name="telephone" id="telephone" lay-verify="phone|number" placeholder=""
+								autocomplete="off" value="" style="width: 98%; height: 30px;" onkeyup="this.value=this.value.replace(/[^0-9]+/,'');">
+						</td>
+					</tr>
+				</thead>
+				<tbody>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	</div>
+	<!--编辑-->
+	<div id="editEmployeePage" style="display: none;">
+		<div class="modal-body" style="padding: 5px;">
+			<table class="site-table table-hover">
+				<thead>
+					<tr>
+						<td style="font-size: 14px; text-align: right;">角色名：</td>
+						<td style="font-size: 14px;"><input type="text" style="width: 98%; height: 30px;"
+								id="editrname"></td>
+					</tr>
+					<tr>
+						<td style="font-size: 14px; text-align: right;">角色描述：</td>
+						<td style="font-size: 14px;"><input type="text" style="width: 98%; height: 30px;"
+								id="editrdesc"></td>
+					</tr>
+				</thead>
+				<tbody>
+				</tbody>
+			</table>
+			<div style="text-align:center;font-size:14px;">
+				<button class='layui-btn layui-btn-small' style="width: 50%; folat:center;font-size: 14px;"
+					onclick="editRole();">保存</button>
+			</div>
+		</div>
+	</div>
+	</div>
+
+	<script>
+		layui.config({
+			base: 'plugins/layui/modules/'
+		});
+		layui.use(['layer', 'laydate'], function () {
+			var layer = layui.layer;
+		});
+	</script>
+
+</body>
+
+</html>

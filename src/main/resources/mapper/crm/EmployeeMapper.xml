@@ -1,0 +1,121 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="pri.crm.dao.EmployeeMapper" >
+  <resultMap id="BaseResultMap" type="pri.crm.vo.EmployeeVo" >
+    <result column="Eno" property="eno" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="Dno" property="dno" jdbcType="INTEGER" />
+    <result column="telephone" property="telephone" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <select id="query" parameterType="pri.crm.vo.EmployeeVo" resultType="pri.crm.vo.EmployeeVo">
+  	select * 
+  	from employee
+  	<where>
+	  	<trim suffixOverrides="and" >
+	      <if test="eno != null" >
+	         and Eno=#{eno}
+	      </if>
+	      <if test="name != null and name!=''" >
+	         and name=#{name}
+	      </if>
+	      <if test="dno != null" >
+	         and Dno=#{dno}
+	      </if>
+	      <if test="sex != null" >
+	         and sex=#{sex} 
+	      </if>
+	      <if test="telephone != null" >
+	         and telephone=#{dno} 
+	      </if>
+	    </trim>
+    </where>
+  </select>
+  <insert id="insert" parameterType="pri.crm.vo.EmployeeVo" >
+    insert into employee (Eno, name,sex, Dno, 
+      telephone)
+    values (#{eno,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR},#{sex,jdbcType=VARCHAR}, #{dno,jdbcType=INTEGER}, 
+      #{telephone,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="pri.crm.vo.EmployeeVo" >
+    insert into employee
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="eno != null" >
+        Eno,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+       <if test="sex != null" >
+        sex,
+      </if>
+      <if test="dno != null" >
+        Dno,
+      </if>
+      <if test="telephone != null" >
+        telephone,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="eno != null" >
+        #{eno,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="dno != null" >
+        #{dno,jdbcType=INTEGER},
+      </if>
+      <if test="telephone != null" >
+        #{telephone,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+   <update id="update" parameterType="pri.crm.vo.EmployeeVo">
+      update employee
+      set 
+    <trim  suffixOverrides="," >
+      <if test="name != null" >
+        name=#{name,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        sex=#{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="dno != null" >
+        dno=#{dno,jdbcType=INTEGER},
+      </if>
+      <if test="telephone != null" >
+        telephone=#{telephone,jdbcType=VARCHAR},
+      </if>
+      </trim>
+    where eno=#{eno}
+  </update>
+
+  <delete id="delete" parameterType="pri.crm.vo.EmployeeVo" >
+    delete
+    from employee
+    where
+      
+      <if test="eno != null" >
+       eno= #{eno,jdbcType=INTEGER}
+        <trim suffixOverrides="and" >
+        <if test="name != null" >
+          and name=#{name,jdbcType=VARCHAR} and
+        </if>
+         <if test="sex != null" >
+           sex=#{sex,jdbcType=VARCHAR} and
+        </if>
+        <if test="dno != null" >
+          dno=#{dno,jdbcType=INTEGER} and
+        </if>
+        <if test="telephone != null" >
+          telephone=#{telephone,jdbcType=VARCHAR} and
+        </if>
+      </trim>
+      </if>
+  </delete>
+</mapper>

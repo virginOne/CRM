@@ -1,0 +1,8 @@
+pri.crm
+pri.crm.config
+pri.crm.controller
+pri.crm.dao
+pri.crm.service
+pri.crm.service.imp
+pri.crm.util
+pri.crm.vo

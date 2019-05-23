@@ -1,0 +1,83 @@
+.layui-elem-quote {
+    margin-bottom: 3px;
+    padding: 3px;
+    line-height: 22px;
+    border-left: 5px solid #009688;
+    border-radius: 0 2px 2px 0;
+    background-color: #f2f2f2;
+}
+
+.layui-input-block {
+    margin-left: 110px;
+        min-height:22px;
+}
+
+.layui-body {
+    position: absolute;
+    left: 00px;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 998;
+    width: auto;
+    overflow: hidden;
+    overflow-y: auto;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.layui-body2 {
+    position: absolute;
+    left: 00px;
+    right: 00px;
+    top: 0;
+    bottom: 0;
+    z-index: 998;
+    width: auto;
+	margin-left: 10px;
+	margin-right: 10px;
+    overflow-y: auto;
+    overflow-x:hidden;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+body{
+	min-width:800px;
+}
+.body{
+	min-width:800px;
+}
+.scroll:hover::-webkit-scrollbar{
+	width:4px !important;
+	height:4px !important;
+	cursor: pointer !important;
+}
+.scroll{
+	overflow: auto;
+}
+.scroll::-webkit-scrollbar{
+	width:0px !important;
+	height:0px !important;
+	cursor: pointer !important;
+}
+.scroll::-webkit-scrollbar-thumb{
+	border-radius:5px;
+	-webkit-box-shadow:inset 0 5px rgba(0,0,0,0.2);
+	background: rgba(0,0,0,0.2);
+}
+.scroll::-webkit-scrollbar-track{
+	-webkit-box-shadow:inset 0 5px rgba(0,0,0,0.2);
+	background: rgba(0,0,0,0.1);
+	border-radius:0;
+}
+.heightLight{
+	background-color: #1AA094;
+	font-weight: bold;
+	opacity:0.8;
+}
+.divSelected{
+	background-color: #666666;
+	opacity:0.8;
+}

@@ -100,6 +100,11 @@ function showAddCustDiv() {
 					var addr = document.getElementById('cust_addr').value;
 					var telephone = document.getElementById('cust_telephone').value;
 					var company = document.getElementById('cust_company').value;
+					
+					if(!checkPhone(telephone)){
+						return false;
+					}
+					
 					$.ajax({
 								async : false,
 								type : "POST",
@@ -384,4 +389,11 @@ function replaceNull(obj) {
 	} else {
 		return obj;
 	}
+}
+function checkPhone(phone){ 
+    if(!(/^1[34578]\d{9}$/.test(phone))){ 
+        return false; 
+    }else{
+    	return true;
+    }
 }

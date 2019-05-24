@@ -198,7 +198,7 @@ public class UserController {
 		UserVo t=new UserVo();
 		t.setUsername(user.getUsername());
 		List<UserVo> tr=userService.query(t);
-		if(!tr.isEmpty()) {
+		if(tr!=null) {
 			jr.setMessage("添加失败,不能添加已有账户");
 			return jr;
 		}

@@ -100,6 +100,12 @@ function showAddCustDiv() {
 					var addr = document.getElementById('cust_addr').value;
 					var telephone = document.getElementById('cust_telephone').value;
 					var company = document.getElementById('cust_company').value;
+					
+					if(!checkPhone(telephone)){
+						layer.msg("联系电话格式错误");
+						return false;
+					}
+					
 					$.ajax({
 								async : false,
 								type : "POST",
@@ -294,6 +300,7 @@ function addlinkman() {
 					}
 				}
 	});
+	$("#link_relationship").val("");
 	layer.open({
 		title : '请填写客户关系',
 		type : 1,
@@ -359,6 +366,11 @@ function modCustomer() {
 		"telephone" : $('#cus_telephone').val(),
 		"company" : $('#cus_company').val()
 	};
+	if(!checkPhone(telephone)){
+		layer.msg("联系电话格式错误");
+		return false;
+	}
+	
 	$.ajax({
 				async : false,
 				type : "PUT",
@@ -384,4 +396,11 @@ function replaceNull(obj) {
 	} else {
 		return obj;
 	}
+}
+function checkPhone(phone){ 
+    if(!(/^1[34578]\d{9}$/.test(phone))){ 
+        return false; 
+    }else{
+    	return true;
+    }
 }

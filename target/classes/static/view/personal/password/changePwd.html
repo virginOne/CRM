@@ -38,7 +38,8 @@
 				<label class="layui-form-label">新密码</label>
 				<div class="layui-input-inline">
 					<input type="password" name="newPwd" id="newPwd" lay-verify="pass"
-						placeholder="新密码" autocomplete="off" class="layui-input" onkeyup="this.value=this.value.replace(/[^a-zA-z0-9]+/,'');
+						placeholder="新密码" autocomplete="off" class="layui-input"
+						onkeyup="this.value=this.value.replace(/[^a-zA-z0-9]+/,'');"
 						maxlength="12">
 				</div>
 			</div>
@@ -47,7 +48,8 @@
 				<div class="layui-input-inline">
 					<input type="password" name="confirmpwd" id="confirmpwd"
 						lay-verify="confirmpwd" placeholder="确认密码" autocomplete="off"
-						class="layui-input" maxlength="12" onkeyup="this.value=this.value.replace(/[^a-zA-z0-9]+/,'');">
+						class="layui-input" maxlength="12"
+						onkeyup="this.value=this.value.replace(/[^a-zA-z0-9]+/,'');">
 				</div>
 			</div>
 			<div class="layui-form-item">
@@ -58,7 +60,7 @@
 			<div class="layui-form-item">
 				<div class="layui-input-block">
 					<button class="layui-btn" lay-submit="" lay-filter="save">保存</button>
-					<button type="reset" class="layui-btn layui-btn-primary">重置</button>
+					<button id="reset" type="reset" class="layui-btn layui-btn-primary">重置</button>
 				</div>
 			</div>
 		</form>

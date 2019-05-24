@@ -12,6 +12,7 @@ function updatePwdForm(jsonData)
 		  dataType: 'json',
 	      success:function(result){
 		         layer.msg(result.message);
+		         $("#reset").click();
 	      	}
 	      	,error:function(XMLHttpRequest, textStatus, errorThrown) {
 			   	  alert('系统错误,请联系系统管理员');

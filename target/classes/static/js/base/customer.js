@@ -300,6 +300,7 @@ function addlinkman() {
 					}
 				}
 	});
+	$("#link_relationship").val("");
 	layer.open({
 		title : '请填写客户关系',
 		type : 1,
